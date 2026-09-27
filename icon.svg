@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4a6b5a"/>
+      <stop offset="100%" stop-color="#22352c"/>
+    </linearGradient>
+    <linearGradient id="gg" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#c0a268"/>
+      <stop offset="100%" stop-color="#a98a52"/>
+    </linearGradient>
+  </defs>
+  <rect width="256" height="256" rx="58" fill="url(#g)"/>
+  <text x="128" y="122" font-family="'Songti SC','PingFang SC','SimSun',serif" font-size="118" font-weight="300"
+        fill="#f6f3ea" text-anchor="middle" dominant-baseline="central" letter-spacing="-2">記</text>
+  <rect x="66" y="176" width="124" height="5" rx="2.5" fill="url(#gg)"/>
+  <rect x="66" y="188" width="90" height="5" rx="2.5" fill="url(#gg)" opacity="0.55"/>
+</svg>

@@ -1,0 +1,20 @@
+config.json
+# —— 私人数据，绝不进公开仓库 ——
+data.js
+导出图片/
+使用说明.txt
+备份/
+backups/
+
+# —— 打包产物 ——
+咱俩的日记.exe
+*.exe
+dist/
+
+# —— 杂项 ——
+node_modules/
+Thumbs.db
+desktop.ini
+.DS_Store
+*.log
+*.tmp

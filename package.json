@@ -1,0 +1,31 @@
+{
+  "name": "our-diary",
+  "version": "1.0.0",
+  "description": "咱俩的日记 - 本地服务",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "bin": "server.js",
+  "pkg": {
+    "assets": [
+      "index.html",
+      "style.css",
+      "app.js",
+      "data.js",
+      "manifest.json",
+      "sw.js",
+      "icon.svg",
+      "icon-192.png",
+      "icon-512.png",
+      "icon.ico",
+      "lib/**/*"
+    ],
+    "scripts": [
+      "server.js"
+    ]
+  },
+  "dependencies": {
+    "png-to-ico": "^3.0.2"
+  }
+}

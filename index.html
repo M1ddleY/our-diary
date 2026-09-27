@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#3f5648" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+<link rel="manifest" href="manifest.json" />
+<link rel="icon" type="image/svg+xml" href="icon.svg" />
+<link rel="apple-touch-icon" href="icon-192.png" />
+<title>咱俩的日记</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="paper"></div>
+
+  <header class="masthead">
+    <div class="masthead__inner">
+      <div class="brand">
+        <span class="brand__mark">記</span>
+        <div class="brand__text">
+          <h1 class="brand__title" data-i18n="app_title">咱俩的日记</h1>
+          <p class="brand__sub" data-i18n="app_sub">你 &amp; Codex · 每日一记</p>
+        </div>
+      </div>
+      <nav class="nav">
+        <button class="nav__item is-active" data-view="timeline" type="button" data-i18n="nav_timeline">时间线</button>
+        <button class="nav__item" data-view="compose" type="button" data-i18n="nav_compose">写今天</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="stage" id="stage">
+    <!-- 时间线视图（三栏：日记 | 进度 | 日历） -->
+    <section class="view is-active" id="view-timeline">
+      <div class="view__head">
+        <p class="eyebrow" id="today-eyebrow">——</p>
+        <h2 class="view__title" data-i18n="timeline_title">一路走来</h2>
+        <p class="view__lede" id="count-lede">共 0 篇</p>
+      </div>
+
+      <div class="layout" id="layout">
+        <div class="layout__main">
+          <div class="toolbar">
+            <div class="search">
+              <svg class="search__icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+              <input class="search__input" id="search-input" type="text" placeholder="搜日期（如 2026-09-05）或关键词…" autocomplete="off" data-i18n-ph="search_ph" />
+              <button class="search__clear" id="search-clear" type="button" title="清除" aria-label="清除搜索">×</button>
+            </div>
+            <div class="toolbar__actions">
+              <button class="toolbar__cal-btn" id="cal-btn" type="button" aria-label="日历">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4.5" width="18" height="17" rx="2.5"/><path d="M8 2.5v4M16 2.5v4M3 9.5h18"/></svg>
+                <span data-i18n="calendar">日历</span>
+              </button>
+              <button class="toolbar__export-btn" id="export-btn" type="button" aria-label="导出分享">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M4 19h16"/></svg>
+                <span data-i18n="export">导出分享</span>
+                <em class="export-btn__count" id="export-count" hidden></em>
+              </button>
+              <button class="toolbar__gallery-btn" id="gallery-btn" type="button" aria-label="打开图库">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
+                <span data-i18n="gallery">打开图库</span>
+              </button>
+              <button class="toolbar__gallery-btn" id="backup-btn" type="button" aria-label="备份日记">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M4 17v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"/></svg>
+                <span data-i18n="backup">备份日记</span>
+              </button>
+            </div>
+            <div class="toolbar__filters" id="active-filters"></div>
+          </div>
+
+          <div class="timeline" id="timeline"></div>
+
+          <!-- 分页 -->
+          <nav class="pagination" id="pagination" aria-label="分页"></nav>
+        </div>
+
+        <!-- 竖向进度条：日记列表 与 日历 之间 -->
+        <div class="layout__progress" id="progress-track" aria-hidden="true">
+          <div class="progress__fill" id="progress-fill"></div>
+          <span class="progress__thumb" id="progress-thumb"></span>
+        </div>
+
+        <aside class="layout__side">
+          <!-- 语言切换器 -->
+          <div class="langbar" id="langbar">
+            <span class="langbar__label" data-i18n="language">语言</span>
+            <div class="langbar__opts" id="lang-opts"></div>
+          </div>
+
+          <div class="cal-wrap" id="cal-wrap">
+            <div class="cal">
+              <div class="cal__head">
+                <button class="cal__nav" id="cal-prev" type="button" aria-label="上一月">‹</button>
+                <div class="cal__title" id="cal-title">——</div>
+                <button class="cal__nav" id="cal-next" type="button" aria-label="下一月">›</button>
+              </div>
+              <div class="cal__grid" id="cal-grid"></div>
+              <div class="cal__foot">
+                <button class="cal__today" id="cal-today" type="button" data-i18n="cal_today">回到今天</button>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- 写今天视图 -->
+    <section class="view" id="view-compose">
+      <div class="view__head">
+        <p class="eyebrow">NEW ENTRY</p>
+        <h2 class="view__title" data-i18n="compose_title">写今天</h2>
+        <p class="view__lede" data-i18n="compose_lede">记录这一刻属于咱俩的片刻</p>
+      </div>
+      <form class="composer" id="composer" autocomplete="off">
+        <label class="field">
+          <span class="field__label" data-i18n="field_date">日期</span>
+          <input class="field__input" type="date" id="entry-date" required />
+        </label>
+        <label class="field">
+          <span class="field__label" data-i18n="field_title">标题</span>
+          <input class="field__input" type="text" id="entry-title" placeholder="给今天起个名字" maxlength="80" required data-i18n-ph="field_title_ph" />
+        </label>
+        <label class="field">
+          <span class="field__label" data-i18n="field_body">正文</span>
+          <textarea class="field__input field__input--area" id="entry-body" rows="9" placeholder="今天的我们，做了什么，说了什么……" required data-i18n-ph="field_body_ph"></textarea>
+        </label>
+        <div class="composer__foot">
+          <p class="composer__hint" data-i18n="composer_hint">正文会由 Codex 同步进 D 盘的 data.js 文件，不会丢。</p>
+          <button class="btn btn--primary" type="submit" data-i18n="composer_submit">记下一笔</button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <p>你 &amp; Codex · <span id="foot-year"></span></p>
+  </footer>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function () {
+        navigator.serviceWorker.register('sw.js').then(function (reg) {
+          console.log('SW registered');
+        }).catch(function (err) { console.log('SW error', err); });
+      });
+    }
+  </script>
+  <script src="lib/html2canvas.min.js"></script>
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
