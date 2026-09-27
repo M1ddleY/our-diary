@@ -1,7 +1,7 @@
 /* ============================================================
    咱俩的日记 · app.js
    —— 渲染时间线 + 写日记 + 搜索 + 日历 + 勾选导出/分享
-   数据来源：data.js 中的 window.__DIARY__（Codex 维护，D 盘真实文件）
+   数据来源：data.js 中的 window.__DIARY__
    手动写的内容存进 localStorage。
    ============================================================ */
 
@@ -67,7 +67,7 @@
   var LANGS = ["zh", "en", "de", "it", "fr", "ja", "ko"];
   var LANG_NAMES = { zh: "中文", en: "English", de: "Deutsch", it: "Italiano", fr: "Français", ja: "日本語", ko: "한국어" };
   var I18N = {
-    zh: { app_title:"咱俩的日记", app_sub:"你 & Codex · 每日一记", nav_timeline:"时间线", nav_compose:"写今天",
+    zh: { app_title:"咱俩的日记", app_sub:"每日一记", nav_timeline:"时间线", nav_compose:"写今天",
       timeline_title:"一路走来", calendar:"日历", gallery:"打开图库", export:"导出分享", language:"语言", cal_today:"回到今天",
       compose_title:"写今天", compose_lede:"记录这一刻属于咱俩的片刻", field_date:"日期", field_title:"标题",
       field_body:"正文", search_ph:"搜日期（如 2026-09-05）或关键词…", field_title_ph:"给今天起个名字",
@@ -77,7 +77,7 @@
       date_label:"日期「{d}」", contains:"含「{q}」", page_info:"第 {cur} 页 / 共 {total} 页", prev:"上一页", next:"下一页",
       check_title:"勾选导出", check_aria:"勾选导出这篇日记", calendar_title:"日历", export_aria:"导出分享",
       today:"今天", progress_label:"翻阅进度" },
-    en: { app_title:"Our Diary", app_sub:"You & Codex · One entry a day", nav_timeline:"Timeline", nav_compose:"Write today",
+    en: { app_title:"Our Diary", app_sub:"One entry a day", nav_timeline:"Timeline", nav_compose:"Write today",
       timeline_title:"The Journey", calendar:"Calendar", gallery:"Gallery", export:"Export / Share", language:"Language", cal_today:"Back to today",
       compose_title:"Write today", compose_lede:"Record a moment between us", field_date:"Date", field_title:"Title",
       field_body:"Body", search_ph:"Search date (e.g. 2026-09-05) or keyword…", field_title_ph:"Name today",
@@ -87,7 +87,7 @@
       date_label:'date "{d}"', contains:'contains "{q}"', page_info:"Page {cur} of {total}", prev:"Prev", next:"Next",
       check_title:"Select to export", check_aria:"Select this entry to export", calendar_title:"Calendar", export_aria:"Export / Share",
       today:"Today", progress_label:"Reading progress" },
-    de: { app_title:"Unser Tagebuch", app_sub:"Du & Codex · Ein Eintrag pro Tag", nav_timeline:"Zeitleiste", nav_compose:"Heute schreiben",
+    de: { app_title:"Unser Tagebuch", app_sub:"Ein Eintrag pro Tag", nav_timeline:"Zeitleiste", nav_compose:"Heute schreiben",
       timeline_title:"Der Weg", calendar:"Kalender", gallery:"Galerie", export:"Export / Teilen", language:"Sprache", cal_today:"Zurück zu heute",
       compose_title:"Heute schreiben", compose_lede:"Halte einen Moment zwischen uns fest", field_date:"Datum", field_title:"Titel",
       field_body:"Text", search_ph:"Datum (z.B. 2026-09-05) oder Stichwort suchen…", field_title_ph:"Heute benennen",
@@ -97,7 +97,7 @@
       date_label:'Datum "{d}"', contains:'enthält "{q}"', page_info:"Seite {cur} von {total}", prev:"Zurück", next:"Weiter",
       check_title:"Zum Export auswählen", check_aria:"Diesen Eintrag zum Export auswählen", calendar_title:"Kalender", export_aria:"Export / Teilen",
       today:"Heute", progress_label:"Lesefortschritt" },
-    it: { app_title:"Il Nostro Diario", app_sub:"Tu & Codex · Un ricordo al giorno", nav_timeline:"Cronologia", nav_compose:"Scrivi oggi",
+    it: { app_title:"Il Nostro Diario", app_sub:"Un ricordo al giorno", nav_timeline:"Cronologia", nav_compose:"Scrivi oggi",
       timeline_title:"Il Cammino", calendar:"Calendario", gallery:"Galleria", export:"Esporta / Condividi", language:"Lingua", cal_today:"Torna a oggi",
       compose_title:"Scrivi oggi", compose_lede:"Registra un momento tra noi", field_date:"Data", field_title:"Titolo",
       field_body:"Testo", search_ph:"Cerca data (es. 2026-09-05) o parola…", field_title_ph:"Dai un nome a oggi",
@@ -107,7 +107,7 @@
       date_label:'data "{d}"', contains:'contiene "{q}"', page_info:"Pagina {cur} di {total}", prev:"Prec", next:"Succ",
       check_title:"Seleziona per esportare", check_aria:"Seleziona questa voce da esportare", calendar_title:"Calendario", export_aria:"Esporta / Condividi",
       today:"Oggi", progress_label:"Avanzamento lettura" },
-    fr: { app_title:"Notre Journal", app_sub:"Toi & Codex · Une entrée par jour", nav_timeline:"Chronologie", nav_compose:"Écrire aujourd'hui",
+    fr: { app_title:"Notre Journal", app_sub:"Une entrée par jour", nav_timeline:"Chronologie", nav_compose:"Écrire aujourd'hui",
       timeline_title:"Le Chemin", calendar:"Calendrier", gallery:"Galerie", export:"Exporter / Partager", language:"Langue", cal_today:"Retour à aujourd'hui",
       compose_title:"Écrire aujourd'hui", compose_lede:"Consigner un moment entre nous", field_date:"Date", field_title:"Titre",
       field_body:"Texte", search_ph:"Chercher une date (ex. 2026-09-05) ou un mot…", field_title_ph:"Nommer aujourd'hui",
@@ -117,7 +117,7 @@
       date_label:'date « {d} »', contains:'contient « {q} »', page_info:"Page {cur} / {total}", prev:"Préc", next:"Suiv",
       check_title:"Sélectionner pour exporter", check_aria:"Sélectionner cette entrée à exporter", calendar_title:"Calendrier", export_aria:"Exporter / Partager",
       today:"Aujourd'hui", progress_label:"Progression de lecture" },
-    ja: { app_title:"ふたりの日記", app_sub:"あなた & Codex · 一日一記", nav_timeline:"タイムライン", nav_compose:"今日を書く",
+    ja: { app_title:"ふたりの日記", app_sub:"一日一記", nav_timeline:"タイムライン", nav_compose:"今日を書く",
       timeline_title:"歩んできた道", calendar:"カレンダー", gallery:"ギャラリー", export:"書き出し / 共有", language:"言語", cal_today:"今日に戻る",
       compose_title:"今日を書く", compose_lede:"ふたりのひとときを記す", field_date:"日付", field_title:"タイトル",
       field_body:"本文", search_ph:"日付（例 2026-09-05）やキーワードを検索…", field_title_ph:"今日に名前を",
@@ -127,7 +127,7 @@
       date_label:"日付「{d}」", contains:"「{q}」を含む", page_info:"{cur} / 全 {total} ページ", prev:"前へ", next:"次へ",
       check_title:"書き出し用に選択", check_aria:"この日記を書き出し用に選択", calendar_title:"カレンダー", export_aria:"書き出し / 共有",
       today:"今日", progress_label:"閲覧の進み具合" },
-    ko: { app_title:"우리들의 일기", app_sub:"당신 & Codex · 하루 한 편", nav_timeline:"타임라인", nav_compose:"오늘 쓰기",
+    ko: { app_title:"우리들의 일기", app_sub:"하루 한 편", nav_timeline:"타임라인", nav_compose:"오늘 쓰기",
       timeline_title:"걸어온 길", calendar:"달력", gallery:"갤러리", export:"내보내기 / 공유", language:"언어", cal_today:"오늘로",
       compose_title:"오늘 쓰기", compose_lede:"우리 사이의 한 순간을 기록", field_date:"날짜", field_title:"제목",
       field_body:"본문", search_ph:"날짜(예: 2026-09-05)나 키워드 검색…", field_title_ph:"오늘에 이름을",
@@ -1058,12 +1058,12 @@
       '</style></head><body>' +
       '<div class="nx-page">' +
         '<div class="nx-masthead">' +
-          '<p class="nx-eyebrow">你 &amp; Codex · 每日一记</p>' +
+          '<p class="nx-eyebrow">每日一记</p>' +
           '<h1>咱俩的日记</h1>' +
           '<p class="nx-sub">分享笔记 · ' + items.length + ' 篇' + groupNote + ' · 导出于 ' + fmtDate(now) + '</p>' +
         '</div>' +
         body +
-        '<div class="nx-foot">你 &amp; Codex · 咱俩一起走过的一天</div>' +
+        '<div class="nx-foot">咱俩一起走过的一天</div>' +
       '</div></body></html>';
   }
 
